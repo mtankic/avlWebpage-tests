@@ -1,6 +1,5 @@
 package objects;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class FormDataBuilder {
@@ -20,12 +19,6 @@ public class FormDataBuilder {
     public Date departureDate;
     public String fileToUpload;
 
-
-    public FormDataBuilder setPrefix (String prefix) {
-        this.prefix = prefix;
-        return this;
-    }
-
     public FormDataBuilder setFirstName (String firstName) {
         this.firstName = firstName;
         return this;
@@ -40,7 +33,6 @@ public class FormDataBuilder {
         this.numberOfGuests = numberOfGuests;
         return this;
     }
-
 
     public FormDataBuilder setNumberOfDays (Integer numberOfDays) {
         this.numberOfDays = numberOfDays;
@@ -70,5 +62,4 @@ public class FormDataBuilder {
     public FormData build () {
         return new FormData(prefix, firstName, lastName, numberOfGuests, numberOfDays, specialRequest, arrivalDate, phoneNumber, fileToUpload);
     }
-
 }

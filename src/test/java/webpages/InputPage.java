@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.time.Duration;
 import java.util.Objects;
 
@@ -26,7 +27,6 @@ public class InputPage {
     private WebElement lastName;
     @FindBy(xpath = "//div[@id='cid_16']/div[@class='form-error-message']")
     private WebElement nameError;
-
 
     @FindBy(id = "input_105")
     private WebElement numberOfDays;
@@ -48,15 +48,10 @@ public class InputPage {
     @FindBy(xpath = "//div[@id='cid_104']/div[@class='form-error-message']")
     private WebElement phoneNumberError;
 
-
     @FindBy(id = "input_109")
     private WebElement email;
     @FindBy(id = "input_6")
     private WebElement roomType;
-    @FindBy(className = "form-spinner-up")
-    private WebElement incrementNoGuests;
-    @FindBy(id = "form-spinner-down")
-    private WebElement decrementNoGuests;
     @FindBy(id = "input_2")
     private WebElement submitButton;
     @FindBy(className = "nicEdit-main")
@@ -66,19 +61,9 @@ public class InputPage {
     private WebElement fileUpload;
     @FindBy(className = "qq-upload-success")
     private WebElement successfulUpload;
-    @FindBy(className = "qq-upload-file")
-    private WebElement fileUploadList;
-
 
     @FindBy(css = ".form-textbox.Stars")
     private WebElement starRating;
-
-    @FindBy(className = "error-navigation-message")
-    private WebElement errorMessage;
-    @FindBy(className = "error-navigation-next-button")
-    private WebElement viewErrorsButton;
-    @FindBy(className = "error-navigation-done-button")
-    private WebElement doneButton;
 
     @FindBy(className = "thankyou")
     private WebElement successMessage;
@@ -95,22 +80,21 @@ public class InputPage {
         return successMessage.isDisplayed();
     }
 
-    public void selectRoomType(String type){
+    public void selectRoomType(String type) {
         Select objSelect = new Select(roomType);
         objSelect.selectByValue(type);
     }
 
-    public void rateWithStars (Integer noOfStars){
+    public void rateWithStars(Integer noOfStars) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].value=arguments[1];", starRating, noOfStars.toString());
-
     }
 
     public Boolean verifyFileUpload(String fileName) {
-      return successfulUpload.isDisplayed() && Objects.equals(successfulUpload.getAttribute("actual-filename"), fileName);
+        return successfulUpload.isDisplayed() && Objects.equals(successfulUpload.getAttribute("actual-filename"), fileName);
     }
 
-    public void clickSubmitButton (){
+    public void clickSubmitButton() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].scrollIntoView(true);", submitButton);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -118,7 +102,7 @@ public class InputPage {
         submitButton.click();
     }
 
-    public String getSubmissionReceivedMessageText(){
+    public String getSubmissionReceivedMessageText() {
         return submissionReceivedMessage.getText();
     }
 
@@ -129,13 +113,14 @@ public class InputPage {
         if (input.lastName != null) lastName.sendKeys(input.lastName);
         if (input.email != null) email.sendKeys(input.email);
         if (input.phoneNumber != null) phoneNumber.sendKeys(input.phoneNumber);
-        if(input.roomType != null) selectRoomType(input.roomType);
-        if(input.starRating != null) rateWithStars(input.starRating);
+        if (input.roomType != null) selectRoomType(input.roomType);
+        if (input.starRating != null) rateWithStars(input.starRating);
         if (input.numberOfDays != null) numberOfDays.sendKeys(input.numberOfDays.toString());
 
         if (input.arrivalDate != null) {
             arrivalDate.clear();
-            arrivalDate.sendKeys(input.arrivalDate); }
+            arrivalDate.sendKeys(input.arrivalDate);
+        }
 
         numberOfGuests.clear();
         if (input.numberOfGuests != null) {
@@ -145,10 +130,10 @@ public class InputPage {
         specialRequest.clear();
         if (input.specialRequest != null) specialRequest.sendKeys(input.specialRequest);
 
-        if(input.fileToUpload!=null) fileUpload.sendKeys(input.fileToUpload);
+        if (input.fileToUpload != null) fileUpload.sendKeys(input.fileToUpload);
     }
 
-    public Boolean isSpecificErrorMessageDisplayed (String requiredField) {
+    public Boolean isSpecificErrorMessageDisplayed(String requiredField) {
         return switch (requiredField) {
             case "firstName", "lastName" -> nameError.isDisplayed();
             case "numberOfDays" -> numberOfDaysError.isDisplayed();
@@ -157,9 +142,9 @@ public class InputPage {
             case "phoneNumber" -> phoneNumberError.isDisplayed();
             default -> false;
         };
-}
+    }
 
-    public String getErrorMessageText (String field) {
+    public String getErrorMessageText(String field) {
         return switch (field) {
             case "firstName", "lastName" -> nameError.getText();
             case "numberOfDays" -> numberOfDaysError.getText();

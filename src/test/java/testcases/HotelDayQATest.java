@@ -10,7 +10,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import webpages.InputPage;
 import org.testng.annotations.Test;
-
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -41,34 +40,28 @@ public class HotelDayQATest {
         hotelInputPage.fillForm(inputData);
         hotelInputPage.clickSubmitButton();
         Assert.assertTrue(hotelInputPage.isSuccessMessageDisplayed());
-        Assert.assertEquals(hotelInputPage.getSubmissionReceivedMessageText(),SUCCESS_MESSAGE );
+        Assert.assertEquals(hotelInputPage.getSubmissionReceivedMessageText(), SUCCESS_MESSAGE);
     }
 
     @Test
     public void uploadFileTest() {
         InputPage hotelInputPage = new InputPage(driver);
-        hotelInputPage.fillForm(new FormDataBuilder().setFirstName(NAME).setLastName(SURNAME)
-                .setNumberOfGuests(2).setNumberOfDays(1).setFileToUpload(FILE_PATH).build());
+        hotelInputPage.fillForm(new FormDataBuilder().setFirstName(NAME).setLastName(SURNAME).setNumberOfGuests(2).setNumberOfDays(1).setFileToUpload(FILE_PATH).build());
         Assert.assertTrue(hotelInputPage.verifyFileUpload(FILE_NAME));
         hotelInputPage.clickSubmitButton();
         Assert.assertTrue(hotelInputPage.isSuccessMessageDisplayed());
-        Assert.assertEquals(hotelInputPage.getSubmissionReceivedMessageText(),SUCCESS_MESSAGE );
+        Assert.assertEquals(hotelInputPage.getSubmissionReceivedMessageText(), SUCCESS_MESSAGE);
     }
 
     @DataProvider
     public Object[][] negativeFormData() {
         return new Object[][]{
                 {new FormDataBuilder().setLastName(SURNAME).setNumberOfGuests(1).setNumberOfDays(1).build(), "firstName", REQUIRED_ERROR},
-                {new FormDataBuilder().setFirstName(NAME)
-                        .setNumberOfGuests(1).setNumberOfDays(1).build(), "lastName", REQUIRED_ERROR},
-                {new FormDataBuilder().setFirstName(NAME).setLastName(SURNAME)
-                        .setNumberOfGuests(5).build(), "numberOfDays", REQUIRED_ERROR},
-                {new FormDataBuilder().setFirstName(NAME).setLastName(SURNAME)
-                        .setNumberOfDays(3).build(), "numberOfGuests", REQUIRED_ERROR},
-                {new FormDataBuilder().setFirstName(NAME).setLastName(SURNAME)
-                        .setNumberOfDays(1).setNumberOfGuests(1).setPhoneNumber("123456").build(), "phoneNumber", FORMAT_ERROR},
-                {new FormDataBuilder().setFirstName(NAME).setLastName(SURNAME)
-                        .setNumberOfGuests(2).setNumberOfDays(1).
+                {new FormDataBuilder().setFirstName(NAME).setNumberOfGuests(1).setNumberOfDays(1).build(), "lastName", REQUIRED_ERROR},
+                {new FormDataBuilder().setFirstName(NAME).setLastName(SURNAME).setNumberOfGuests(5).build(), "numberOfDays", REQUIRED_ERROR},
+                {new FormDataBuilder().setFirstName(NAME).setLastName(SURNAME).setNumberOfDays(3).build(), "numberOfGuests", REQUIRED_ERROR},
+                {new FormDataBuilder().setFirstName(NAME).setLastName(SURNAME).setNumberOfDays(1).setNumberOfGuests(1).setPhoneNumber("123456").build(), "phoneNumber", FORMAT_ERROR},
+                {new FormDataBuilder().setFirstName(NAME).setLastName(SURNAME).setNumberOfGuests(2).setNumberOfDays(1).
                         setArrivalDate(LocalDate.now().plusMonths(1).with(TemporalAdjusters.dayOfWeekInMonth(1, DayOfWeek.WEDNESDAY)).format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))).build(), "arrivalDate", DATE_ERROR}
         };
     }
@@ -77,16 +70,9 @@ public class HotelDayQATest {
     public Object[][] positiveFormData() {
         return new Object[][]{
                 {new FormDataBuilder().setFirstName(NAME).setLastName(SURNAME).setNumberOfGuests(1).setNumberOfDays(1).build()},
-                {new FormDataBuilder().setFirstName(NAME).setLastName(SURNAME)
-                        .setNumberOfDays(3).setNumberOfGuests(2).setPhoneNumber("3851234567").build()},
-                {new FormDataBuilder().setFirstName(NAME).setLastName(SURNAME)
-                        .setNumberOfGuests(4).setNumberOfDays(1).
-                        setArrivalDate(LocalDate.now().plusMonths(1).with(TemporalAdjusters.dayOfWeekInMonth(1, DayOfWeek.MONDAY)).format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))).build()},
-                {new FormData("Miss", NAME, MIDDLENAME, SURNAME,
-                        "email@test.com", "3851234567",
-                        "Solo Room (1 Person)", 1, 2,
-                        "My Test Request", 3)}
-
+                {new FormDataBuilder().setFirstName(NAME).setLastName(SURNAME).setNumberOfDays(3).setNumberOfGuests(2).setPhoneNumber("3851234567").build()},
+                {new FormDataBuilder().setFirstName(NAME).setLastName(SURNAME).setNumberOfGuests(4).setNumberOfDays(1).setArrivalDate(LocalDate.now().plusMonths(1).with(TemporalAdjusters.dayOfWeekInMonth(1, DayOfWeek.MONDAY)).format(DateTimeFormatter.ofPattern("MM-dd-yyyy"))).build()},
+                {new FormData("Miss", NAME, MIDDLENAME, SURNAME, "email@test.com", "3851234567", "Solo Room (1 Person)", 1, 2, "My Test Request", 3)}
         };
     }
 
@@ -101,7 +87,7 @@ public class HotelDayQATest {
     static String REQUIRED_ERROR = "This field is required.";
     static String FORMAT_ERROR = "Field value must fill mask.";
     static String DATE_ERROR = "This date is unavailable.";
-    static String FILE_NAME =  "Minnesota_fake_id_card_driver_license.jpg";
-    static String FILE_PATH = System.getProperty("user.dir") + "/" + FILE_NAME;
+    static String FILE_NAME = "Minnesota_fake_id_card_driver_license.jpg";
+    static String FILE_PATH = System.getProperty("user.dir") + "/src/test/java/testfiles/" + FILE_NAME;
     static String SUCCESS_MESSAGE = "Your submission has been received.";
 }

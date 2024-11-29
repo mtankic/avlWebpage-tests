@@ -27,7 +27,7 @@ public class HotelDayQATest {
 
     @Test(dataProvider = "negativeFormData")
     public void fillDataNegativeTests(FormData inputData, String requiredField, String errorMessage) {
-        InputPage hotelInputPage = new InputPage(driver);
+        InputPage hotelInputPage = new InputPage(driver, true);
         hotelInputPage.fillForm(inputData);
         hotelInputPage.clickSubmitButton();
         Assert.assertTrue(hotelInputPage.isSpecificErrorMessageDisplayed(requiredField));
@@ -36,7 +36,7 @@ public class HotelDayQATest {
 
     @Test(dataProvider = "positiveFormData")
     public void fillDataPositiveTests(FormData inputData) {
-        InputPage hotelInputPage = new InputPage(driver);
+        InputPage hotelInputPage = new InputPage(driver, true);
         hotelInputPage.fillForm(inputData);
         hotelInputPage.clickSubmitButton();
         Assert.assertTrue(hotelInputPage.isSuccessMessageDisplayed());
@@ -45,7 +45,7 @@ public class HotelDayQATest {
 
     @Test
     public void uploadFileTest() {
-        InputPage hotelInputPage = new InputPage(driver);
+        InputPage hotelInputPage = new InputPage(driver, true);
         hotelInputPage.fillForm(new FormDataBuilder().setFirstName(NAME).setLastName(SURNAME).setNumberOfGuests(2).setNumberOfDays(1).setFileToUpload(FILE_PATH).build());
         Assert.assertTrue(hotelInputPage.verifyFileUpload(FILE_NAME));
         hotelInputPage.clickSubmitButton();

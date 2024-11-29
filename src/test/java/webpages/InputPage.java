@@ -70,9 +70,9 @@ public class InputPage {
     @FindBy(className = "thankyou-sub-text")
     private WebElement submissionReceivedMessage;
 
-    public InputPage(WebDriver driver) {
+    public InputPage(WebDriver driver, Boolean loadPage) {
         this.driver = driver;
-        driver.get(PAGE_URL);
+        if (loadPage) driver.get(PAGE_URL);
         PageFactory.initElements(driver, this);
     }
 
